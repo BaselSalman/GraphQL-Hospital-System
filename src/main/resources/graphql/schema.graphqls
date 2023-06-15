@@ -1,0 +1,62 @@
+type Query {
+    allDoctors: [Doctor!]
+    doctorById(id: ID!): Doctor
+    allPatients: [Patient!]
+    patientById(id: ID!): Patient
+    allMedicalServices: [MedicalService!]
+    medicalServiceById(id: ID!): MedicalService
+    allAppointments: [Appointment!]
+    appointmentById(id: ID!): Appointment
+}
+
+type Mutation {
+    addDoctor(name: String!, phoneNumber: String!, email: String!, medicalServiceId: Int!): Doctor
+    deleteDoctor(id: ID!): Doctor
+    updateDoctor(id: ID!, name: String, email: String, phoneNumber: String): Doctor
+    addPatient(name: String!, gender: String!, dob: String!, phoneNumber: String!, email: String!): Patient
+    deletePatient(id: ID!): Patient
+    addMedicalService(name: String!, description: String!, estimatedDuration: String!, cost: Float!): MedicalService
+    deleteMedicalService(id: ID!): MedicalService
+    addAppointment(patientId: Int!, doctorId: Int!, date: String!, time: String!, reason: String!): Appointment
+    deleteAppointment(id: ID!): Appointment
+    cancelAppointment(id: ID!): Appointment
+    completeAppointment(id: ID!): Appointment
+}
+
+type Doctor {
+    id: ID!
+    name: String
+    phoneNumber: String
+    email: String
+    appointments: [Appointment!]!
+    medicalService: MedicalService
+}
+
+type Patient {
+    id: ID!
+    name: String
+    gender: String
+    dob: String
+    phoneNumber: String
+    email: String
+    appointments: [Appointment]
+}
+
+type Appointment {
+    id: ID!
+    date: String
+    time: String
+    reason: String
+    status: String
+    doctor: Doctor
+    patient: Patient
+}
+
+type MedicalService {
+    id: ID!
+    name: String
+    description: String
+    estimatedDuration: String
+    cost: Float
+    doctors: [Doctor]
+}
